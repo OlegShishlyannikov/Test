@@ -124,8 +124,9 @@ namespace test
 
         ts_pass_count += tc_pass_count;
         ts_fails_count += tc_fails_count;
+		std::printf( "\r\n" );
         std::printf( "\t\t\tTotal passed - \e[32m%lu\e[39m, failed - \e[31m%lu\e[39m in \"\e[33m%s\e[39m\" testcase\r\n", tc_pass_count, tc_fails_count, testcase_info.first.c_str() );
-        std::printf( "\r\n\r\n" );
+        std::printf( "\r\n" );
       }
 
       std::printf( "\t\tTotal passed - \e[32m%lu\e[39m, failed - \e[31m%lu\e[39m in \"\e[33m%s\e[39m\" testsuite\r\n", ts_pass_count, ts_fails_count, testsuite_info.first.c_str() );

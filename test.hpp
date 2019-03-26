@@ -280,24 +280,24 @@ namespace test
   }                                                                         \
   std::cout << ""                                                       \
 
-#define TEST( TestSuiteName, TestCaseName )                                 \
-  void __attribute__(( used )) test_suite_name_##TestSuiteName##_test_case_name_##TestCaseName##_nested( void ); \
-  void __attribute__(( used )) test_suite_name_##TestSuiteName##_##test_case_name_##TestCaseName() \
-  {                                                                         \
+#define TEST( TestSuiteName, TestCaseName )								\
+  volatile void __attribute__(( used, weak )) test_suite_name_##TestSuiteName##_test_case_name_##TestCaseName##_nested( void ); \
+  volatile void __attribute__(( used )) test_suite_name_##TestSuiteName##_##test_case_name_##TestCaseName() \
+  {																		\
     extern std::string current_ts_name, current_tc_name;                \
     extern std::map< std::string, std::map< std::string, std::vector< std::tuple< bool, std::string, std::string, std::string >>>> report; \
     current_ts_name = #TestSuiteName;                                   \
     current_tc_name = #TestCaseName;                                    \
-    if( report.find( #TestSuiteName ) == report.end() )                     \
-      report.insert( std::make_pair( #TestSuiteName, std::map< std::string, std::vector< std::tuple< bool, std::string, std::string, std::string >>>() )); \
-    if( report.at( #TestSuiteName ).find( #TestCaseName ) == report.at( #TestSuiteName ).end() ) \
-      report.at( #TestSuiteName ).insert( std::make_pair( #TestCaseName, std::vector< std::tuple< bool, std::string, std::string, std::string >>() )); \
-    std::printf( "\r\n%s\r\n", "Running " #TestSuiteName ":" #TestCaseName " ... \r\n" ); \
+    if( report.find( current_ts_name ) == report.end() )				\
+      report.insert( std::make_pair( current_ts_name, std::map< std::string, std::vector< std::tuple< bool, std::string, std::string, std::string >>>() )); \
+    if( report.at( current_ts_name ).find( current_tc_name ) == report.at( current_ts_name ).end() ) \
+      report.at( current_ts_name ).insert( std::make_pair( current_tc_name, std::vector< std::tuple< bool, std::string, std::string, std::string >>() )); \
+    std::printf( "\r\nRunning %s : %s ... \r\n\r\n", current_ts_name.c_str(), current_tc_name.c_str() ); \
     test_suite_name_##TestSuiteName##_test_case_name_##TestCaseName##_nested(); \
-  }                                                                         \
+  }																		\
                                                                         \
   volatile void * __attribute__(( used, section( "test_function_pointers" ))) test_suite_name_##TestSuiteName##_##test_case_name_##TestCaseName##_ptr \
     = reinterpret_cast< volatile void * >( test_suite_name_##TestSuiteName##_##test_case_name_##TestCaseName ); \
-  void __attribute__(( used )) test_suite_name_##TestSuiteName##_test_case_name_##TestCaseName##_nested( void ) \
+  volatile void __attribute__(( used )) test_suite_name_##TestSuiteName##_test_case_name_##TestCaseName##_nested( void ) \
 
 #endif /* TEST_HPP */
