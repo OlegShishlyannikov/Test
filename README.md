@@ -1,11 +1,28 @@
 # Test
 Simple testing framework
 
-EXPECT_EQ( exp1, exp2 ),
+## Usage: 
 
-EXPECT_NOT_EQ( exp1, exp2 ),
+### Existing asserts and expectations:
 
-ASSERT_EQ( exp1, exp2 ),
+	```cpp
+	EXPECT_EQ( exp1, exp2 );
+	EXPECT_NOT_EQ( exp1, exp2 );
+	EXPECT_STREQ( exp1, exp2 );
+	EXPECT_NOT_STREQ( exp1, exp2 );
+	ASSERT_EQ( exp1, exp2 );
+	ASSERT_NOT_EQ( exp1, exp2 );
+	ASSERT_STREQ( exp1, exp2 );
+	ASSERT_NOT_STREQ( exp1, exp2 );
+	```
 
-ASSERT_NOT_EQ( exp1, exp2 )
+### Creating tests in same of separate file (this functions must be statically linked to executable):
 
+	```cpp
+	TEST( "Test suite name", "Test case name" )
+	{
+	ASSERT_EQ( 2 + 2, 4 );
+	EXPECT_STREQ( "Foo", "Foo" );
+	...
+	}
+	```
