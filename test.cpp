@@ -29,6 +29,21 @@ namespace test
                  , file
                  , line );
 
+	if( !ok ){
+
+	  if constexpr (( !std::is_null_pointer_v< decltype( exp1 )> && !std::is_null_pointer_v< decltype( exp2 )>))
+					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  else if constexpr (( std::is_null_pointer_v< decltype( exp1 )>)) {
+
+		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  
+	  } else if constexpr (( std::is_null_pointer_v< decltype( exp2 )>)){
+
+		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+	  
+	  }	  
+	}
+	
     test_results.push_back( std::make_tuple( asserts_counter, ok, current_ts_name, current_tc_name, std::string( file ) + ":" + std::to_string( line ), std::string( exp1_str ), std::string( exp2_str )));
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( ok, "ASSERT_STREQ", exp1_str, exp2_str ));
     asserts_counter ++;
@@ -49,6 +64,21 @@ namespace test
                  , file
                  , line );
 
+	if( !ok ){
+
+	  if constexpr (( !std::is_null_pointer_v< decltype( exp1 )> && !std::is_null_pointer_v< decltype( exp2 )>))
+					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  else if constexpr (( std::is_null_pointer_v< decltype( exp1 )>)) {
+
+		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  
+	  } else if constexpr (( std::is_null_pointer_v< decltype( exp2 )>)){
+
+		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+	  
+	  }	  
+	}
+	
     test_results.push_back( std::make_tuple( asserts_counter, ok, current_ts_name, current_tc_name, std::string( file ) + ":" + std::to_string( line ), std::string( exp1_str ), std::string( exp2_str )));
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( ok, "ASSERT_NOT_STREQ", exp1_str, exp2_str ));
     asserts_counter ++;
@@ -69,6 +99,21 @@ namespace test
                  , file
                  , line );
 
+	if( !ok ){
+
+	  if constexpr (( !std::is_null_pointer_v< decltype( exp1 )> && !std::is_null_pointer_v< decltype( exp2 )>))
+					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  else if constexpr (( std::is_null_pointer_v< decltype( exp1 )>)) {
+
+		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  
+	  } else if constexpr (( std::is_null_pointer_v< decltype( exp2 )>)){
+
+		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+	  
+	  }	  
+	}
+	
     test_results.push_back( std::make_tuple( asserts_counter, ok, current_ts_name, current_tc_name, std::string( file ) + ":" + std::to_string( line ), std::string( exp1_str ), std::string( exp2_str )));
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( ok, "EXPECT_EQ", exp1_str, exp2_str ));
     asserts_counter ++;
@@ -86,6 +131,21 @@ namespace test
                  , exp2_str
                  , file
                  , line );
+
+	if( !ok ){
+
+	  if constexpr (( !std::is_null_pointer_v< decltype( exp1 )> && !std::is_null_pointer_v< decltype( exp2 )>))
+					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  else if constexpr (( std::is_null_pointer_v< decltype( exp1 )>)) {
+
+		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  
+	  } else if constexpr (( std::is_null_pointer_v< decltype( exp2 )>)){
+
+		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+	  
+	  }	  
+	}
 
     test_results.push_back( std::make_tuple( asserts_counter, ok, current_ts_name, current_tc_name, std::string( file ) + ":" + std::to_string( line ), std::string( exp1_str ), std::string( exp2_str )));
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( ok, "EXPECT_NOT_STREQ", exp1_str, exp2_str ));

@@ -48,6 +48,21 @@ namespace test
                  , file
                  , line );
 
+	if( !ok ){
+
+	  if constexpr (( !std::is_null_pointer_v< A > && !std::is_null_pointer_v< B >))
+					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  else if constexpr (( std::is_null_pointer_v< A >)) {
+
+		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  
+	  } else if constexpr (( std::is_null_pointer_v< B >)){
+
+		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+	  
+	  }	  
+	}
+	
     test_results.push_back( std::make_tuple( asserts_counter, ok, current_ts_name, current_tc_name, std::string( file ) + ":" + std::to_string( line ), std::string( exp1_str ), std::string( exp2_str )));
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( ok, "ASSERT_EQ", exp1_str, exp2_str ));
     asserts_counter ++;
@@ -68,6 +83,21 @@ namespace test
                  , file
                  , line );
 
+	if( !ok ){
+
+	  if constexpr (( !std::is_null_pointer_v< A > && !std::is_null_pointer_v< B >))
+					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  else if constexpr (( std::is_null_pointer_v< A >)) {
+
+		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  
+	  } else if constexpr (( std::is_null_pointer_v< B >)){
+
+		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+	  
+	  }	  
+	}
+	
     test_results.push_back( std::make_tuple( asserts_counter, ok, current_ts_name, current_tc_name, std::string( file ) + ":" + std::to_string( line ), std::string( exp1_str ), std::string( exp2_str )));
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( ok, "ASSERT_NOT_EQ", exp1_str, exp2_str ));
     asserts_counter ++;
@@ -88,6 +118,21 @@ namespace test
                  , file
                  , line );
 
+	if( !ok ){
+
+	  if constexpr (( !std::is_null_pointer_v< A > && !std::is_null_pointer_v< B >))
+					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  else if constexpr (( std::is_null_pointer_v< A >)) {
+
+		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  
+	  } else if constexpr (( std::is_null_pointer_v< B >)){
+
+		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+	  
+	  }	  
+	}
+	
     test_results.push_back( std::make_tuple( asserts_counter, ok, current_ts_name, current_tc_name, std::string( file ) + ":" + std::to_string( line ), std::string( exp1_str ), std::string( exp2_str )));
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( ok, "EXPECT_EQ", exp1_str, exp2_str ));
     asserts_counter ++;
@@ -105,8 +150,23 @@ namespace test
                  , exp2_str
                  , file
                  , line );
+	
+	if( !ok ){
 
-    test_results.push_back( std::make_tuple( asserts_counter, ok, current_ts_name, current_tc_name, std::string( file ) + ":" + std::to_string( line ), std::string( exp1_str ), std::string( exp2_str )));
+	  if constexpr (( !std::is_null_pointer_v< A > && !std::is_null_pointer_v< B >))
+					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  else if constexpr (( std::is_null_pointer_v< A >)) {
+
+		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+	  
+	  } else if constexpr (( std::is_null_pointer_v< B >)){
+
+		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+	  
+	  }	  
+	}
+
+	test_results.push_back( std::make_tuple( asserts_counter, ok, current_ts_name, current_tc_name, std::string( file ) + ":" + std::to_string( line ), std::string( exp1_str ), std::string( exp2_str )));
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( ok, "EXPECT_NOT_EQ", exp1_str, exp2_str ));
     asserts_counter ++;
   }
@@ -116,168 +176,168 @@ namespace test
   catch( std::exception & e ){                                          \
     std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
                  , asserts_counter                                      \
-                 , __FILE__                                                 \
-                 , __LINE__                                                 \
+                 , __FILE__												\
+                 , __LINE__												\
                  , e.what() );                                          \
                                                                         \
-    asserts_counter ++;                                                     \
+    asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
-                                             false,                         \
+                                             false,						\
                                              current_ts_name,           \
                                              current_tc_name,           \
                                              std::string( __FILE__ ) + ":" + std::to_string( __LINE__ ), \
-                                             std::string( #A ),             \
+                                             std::string( #A ),			\
                                              std::string( #B )));       \
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "ASSERT_EQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
-  }                                                                         \
+  }																		\
   std::cout << ""                                                       \
 
 #define ASSERT_NOT_EQ( A, B ) try { test::assert_not_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
     std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
                  , asserts_counter                                      \
-                 , __FILE__                                                 \
-                 , __LINE__                                                 \
+                 , __FILE__												\
+                 , __LINE__												\
                  , e.what() );                                          \
                                                                         \
-    asserts_counter ++;                                                     \
+    asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
-                                             false,                         \
+                                             false,						\
                                              current_ts_name,           \
                                              current_tc_name,           \
                                              std::string( __FILE__ ) + ":" + std::to_string( __LINE__ ), \
-                                             std::string( #A ),             \
+                                             std::string( #A ),			\
                                              std::string( #B )));       \
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "ASSERT_NOT_EQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
-  }                                                                         \
+  }																		\
   std::cout << ""                                                       \
 
 #define EXPECT_EQ( A, B ) try { test::expect_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
     std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
                  , asserts_counter                                      \
-                 , __FILE__                                                 \
-                 , __LINE__                                                 \
+                 , __FILE__												\
+                 , __LINE__												\
                  , e.what() );                                          \
                                                                         \
-    asserts_counter ++;                                                     \
+    asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
-                                             false,                         \
+                                             false,						\
                                              current_ts_name,           \
                                              current_tc_name,           \
                                              std::string( __FILE__ ) + ":" + std::to_string( __LINE__ ), \
-                                             std::string( #A ),             \
+                                             std::string( #A ),			\
                                              std::string( #B )));       \
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "EXPECT_EQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
-  }                                                                         \
+  }																		\
   std::cout << ""                                                       \
 
 #define EXPECT_NOT_EQ( A, B ) try { test::expect_not_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
     std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
                  , asserts_counter                                      \
-                 , __FILE__                                                 \
-                 , __LINE__                                                 \
+                 , __FILE__												\
+                 , __LINE__												\
                  , e.what() );                                          \
                                                                         \
-    asserts_counter ++;                                                     \
+    asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
-                                             false,                         \
+                                             false,						\
                                              current_ts_name,           \
                                              current_tc_name,           \
                                              std::string( __FILE__ ) + ":" + std::to_string( __LINE__ ), \
-                                             std::string( #A ),             \
+                                             std::string( #A ),			\
                                              std::string( #B )));       \
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "EXPECT_NOT_EQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
-  }                                                                         \
+  }																		\
   std::cout << ""                                                       \
 
 #define ASSERT_STREQ( A, B ) try { test::assert_str_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
     std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
                  , asserts_counter                                      \
-                 , __FILE__                                                 \
-                 , __LINE__                                                 \
+                 , __FILE__												\
+                 , __LINE__												\
                  , e.what() );                                          \
                                                                         \
-    asserts_counter ++;                                                     \
+    asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
-                                             false,                         \
+                                             false,						\
                                              current_ts_name,           \
                                              current_tc_name,           \
                                              std::string( __FILE__ ) + ":" + std::to_string( __LINE__ ), \
-                                             std::string( #A ),             \
+                                             std::string( #A ),			\
                                              std::string( #B )));       \
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "ASSERT_STREQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
-  }                                                                         \
+  }																		\
   std::cout << ""                                                       \
 
 #define ASSERT_NOT_STREQ( A, B ) try { test::assert_not_str_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
     std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
                  , asserts_counter                                      \
-                 , __FILE__                                                 \
-                 , __LINE__                                                 \
+                 , __FILE__												\
+                 , __LINE__												\
                  , e.what() );                                          \
                                                                         \
-    asserts_counter ++;                                                     \
+    asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
-                                             false,                         \
+                                             false,						\
                                              current_ts_name,           \
                                              current_tc_name,           \
                                              std::string( __FILE__ ) + ":" + std::to_string( __LINE__ ), \
-                                             std::string( #A ),             \
+                                             std::string( #A ),			\
                                              std::string( #B )));       \
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "ASSERT_NOT_STREQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
-  }                                                                         \
+  }																		\
   std::cout << ""                                                       \
 
 #define EXPECT_STREQ( A, B ) try { test::expect_str_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
     std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
                  , asserts_counter                                      \
-                 , __FILE__                                                 \
-                 , __LINE__                                                 \
+                 , __FILE__												\
+                 , __LINE__												\
                  , e.what() );                                          \
                                                                         \
-    asserts_counter ++;                                                     \
+    asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
-                                             false,                         \
+                                             false,						\
                                              current_ts_name,           \
                                              current_tc_name,           \
                                              std::string( __FILE__ ) + ":" + std::to_string( __LINE__ ), \
-                                             std::string( #A ),             \
+                                             std::string( #A ),			\
                                              std::string( #B )));       \
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "EXPECT_STREQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
-  }                                                                         \
+  }																		\
   std::cout << ""                                                       \
 
 #define EXPECT_NOT_STREQ( A, B ) try { test::expect_not_str_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
     std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
                  , asserts_counter                                      \
-                 , __FILE__                                                 \
-                 , __LINE__                                                 \
+                 , __FILE__												\
+                 , __LINE__												\
                  , e.what() );                                          \
                                                                         \
-    asserts_counter ++;                                                     \
+    asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
-                                             false,                         \
+                                             false,						\
                                              current_ts_name,           \
                                              current_tc_name,           \
                                              std::string( __FILE__ ) + ":" + std::to_string( __LINE__ ), \
-                                             std::string( #A ),             \
+                                             std::string( #A ),			\
                                              std::string( #B )));       \
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "EXPECT_NOT_STREQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
-  }                                                                         \
+  }																		\
   std::cout << ""                                                       \
 
 #define TEST( TestSuiteName, TestCaseName )								\
