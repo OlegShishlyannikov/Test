@@ -5,7 +5,7 @@ Simple testing framework
 
 ### Existing asserts and expectations:
 
-	```cpp
+	```CPP
 	EXPECT_EQ( exp1, exp2 );
 	EXPECT_NOT_EQ( exp1, exp2 );
 	EXPECT_STREQ( exp1, exp2 );
@@ -18,7 +18,7 @@ Simple testing framework
 
 ### Creating tests in same of separate file (this functions must be statically linked to executable):
 
-	```cpp
+	```CPP
 	TEST( "Test suite name", "Test case name" )
 	{
 	ASSERT_EQ( 2 + 2, 4 );
