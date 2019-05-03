@@ -1,5 +1,11 @@
 #include "test.hpp"
 
+#include <cstdio>
+#include <cstdlib>
+#include <unistd.h>
+
+opts_t opts;
+
 std::string current_ts_name, current_tc_name;
 std::vector< test::test_info_t > test_results;
 std::map< std::string, std::map< std::string, std::vector< std::tuple< bool, std::string, std::string, std::string >>>> report;
@@ -20,26 +26,26 @@ namespace test
   {
     success_t ok = ( std::strcmp( exp1, exp2 ) == 0 );
 
-    std::printf( ok
-                 ? "#%lu [\e[32mOK\e[39m] (%s == %s) At %s:%i\r\n"
-                 : "#%lu [\e[31mFAIL\e[39m] (%s != %s) At %s:%i\r\n"
-                 , asserts_counter
-                 , exp1_str
-                 , exp2_str
-                 , file
-                 , line );
+    if( opts.verbose_level > 1 ) std::printf( ok
+											  ? "#%lu [\e[32mOK\e[39m] (%s == %s) At %s:%i\r\n"
+											  : "#%lu [\e[31mFAIL\e[39m] (%s != %s) At %s:%i\r\n"
+											  , asserts_counter
+											  , exp1_str
+											  , exp2_str
+											  , file
+											  , line );
 
 	if( !ok ){
 
 	  if constexpr (( !std::is_null_pointer_v< decltype( exp1 )> && !std::is_null_pointer_v< decltype( exp2 )>))
-					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+					 if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  else if constexpr (( std::is_null_pointer_v< decltype( exp1 )>)) {
 
-		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  
 	  } else if constexpr (( std::is_null_pointer_v< decltype( exp2 )>)){
 
-		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl; } else {}
 	  
 	  }	  
 	}
@@ -55,26 +61,26 @@ namespace test
   {
     success_t ok = ( std::strcmp( exp1, exp2 ) != 0 );
 
-    std::printf( ok
-                 ? "#%lu [\e[32mOK\e[39m] (%s != %s) At %s:%i\r\n"
-                 : "#%lu [\e[31mFAIL\e[39m] (%s == %s) At %s:%i\r\n"
-                 , asserts_counter
-                 , exp1_str
-                 , exp2_str
-                 , file
-                 , line );
+    if( opts.verbose_level > 1 ) std::printf( ok
+											  ? "#%lu [\e[32mOK\e[39m] (%s != %s) At %s:%i\r\n"
+											  : "#%lu [\e[31mFAIL\e[39m] (%s == %s) At %s:%i\r\n"
+											  , asserts_counter
+											  , exp1_str
+											  , exp2_str
+											  , file
+											  , line );
 
 	if( !ok ){
 
 	  if constexpr (( !std::is_null_pointer_v< decltype( exp1 )> && !std::is_null_pointer_v< decltype( exp2 )>))
-					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+					 if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  else if constexpr (( std::is_null_pointer_v< decltype( exp1 )>)) {
 
-		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  
 	  } else if constexpr (( std::is_null_pointer_v< decltype( exp2 )>)){
 
-		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl; } else {}
 	  
 	  }	  
 	}
@@ -90,26 +96,26 @@ namespace test
   {
     success_t ok = ( std::strcmp( exp1, exp2 ) == 0 );
 
-    std::printf( ok
-                 ? "#%lu [\e[32mOK\e[39m] (%s == %s) At %s:%i\r\n"
-                 : "#%lu [\e[31mFAIL\e[39m] (%s != %s) At %s:%i\r\n"
-                 , asserts_counter
-                 , exp1_str
-                 , exp2_str
-                 , file
-                 , line );
+    if( opts.verbose_level > 1 ) std::printf( ok
+											  ? "#%lu [\e[32mOK\e[39m] (%s == %s) At %s:%i\r\n"
+											  : "#%lu [\e[31mFAIL\e[39m] (%s != %s) At %s:%i\r\n"
+											  , asserts_counter
+											  , exp1_str
+											  , exp2_str
+											  , file
+											  , line );
 
 	if( !ok ){
 
 	  if constexpr (( !std::is_null_pointer_v< decltype( exp1 )> && !std::is_null_pointer_v< decltype( exp2 )>))
-					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+					 if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  else if constexpr (( std::is_null_pointer_v< decltype( exp1 )>)) {
 
-		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  
 	  } else if constexpr (( std::is_null_pointer_v< decltype( exp2 )>)){
 
-		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl; } else {}
 	  
 	  }	  
 	}
@@ -123,26 +129,26 @@ namespace test
   {
     success_t ok = ( std::strcmp( exp1, exp2 ) != 0 );
 
-    std::printf( ok
-                 ? "#%lu [\e[32mOK\e[39m] (%s != %s) At %s:%i\r\n"
-                 : "#%lu [\e[31mFAIL\e[39m] (%s == %s) At %s:%i\r\n"
-                 , asserts_counter
-                 , exp1_str
-                 , exp2_str
-                 , file
-                 , line );
+    if( opts.verbose_level > 1 ) std::printf( ok
+											  ? "#%lu [\e[32mOK\e[39m] (%s != %s) At %s:%i\r\n"
+											  : "#%lu [\e[31mFAIL\e[39m] (%s == %s) At %s:%i\r\n"
+											  , asserts_counter
+											  , exp1_str
+											  , exp2_str
+											  , file
+											  , line );
 
 	if( !ok ){
 
 	  if constexpr (( !std::is_null_pointer_v< decltype( exp1 )> && !std::is_null_pointer_v< decltype( exp2 )>))
-					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+					 if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  else if constexpr (( std::is_null_pointer_v< decltype( exp1 )>)) {
 
-		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  
 	  } else if constexpr (( std::is_null_pointer_v< decltype( exp2 )>)){
 
-		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl; } else {}
 	  
 	  }	  
 	}
@@ -171,12 +177,12 @@ namespace test
         for( const std::tuple< bool, std::string, std::string, std::string > & check_info : testcase_info.second ){
           if( !std::get< 1 >( check_info ).empty() ){
 
-            std::printf(( std::get< 0 >( check_info ))
-                        ? "\t\t\t[\e[32mOK\e[39m] (%s), ( \e[33m%s\e[39m, \e[33m%s\e[39m )\r\n"
-                        : "\t\t\t[\e[31mFAIL\e[39m] (%s), ( \e[33m%s\e[39m, \e[33m%s\e[39m )\r\n",
-                        std::get< 1 >( check_info ).c_str(),
-                        std::get< 2 >( check_info ).c_str(),
-                        std::get< 3 >( check_info ).c_str() );
+            if( opts.verbose_level > 0 ) std::printf(( std::get< 0 >( check_info ))
+													 ? "\t\t\t[\e[32mOK\e[39m] (%s), ( \e[33m%s\e[39m, \e[33m%s\e[39m )\r\n"
+													 : "\t\t\t[\e[31mFAIL\e[39m] (%s), ( \e[33m%s\e[39m, \e[33m%s\e[39m )\r\n",
+													 std::get< 1 >( check_info ).c_str(),
+													 std::get< 2 >( check_info ).c_str(),
+													 std::get< 3 >( check_info ).c_str() );
 
             ( std::get< 0 >( check_info )) ? tc_pass_count ++ : tc_fails_count ++;
           }
@@ -193,4 +199,38 @@ namespace test
       std::printf( "\r\n\r\n" );
     }
   }
+}
+
+void usage( void )
+{
+  std::printf( "Usage : ./<project_name>.elf [opts]\r\n\t -v : verbosity level\r\n" );
+}
+
+int main( int argc, char * argv[] )
+{
+  static const char * opt_str = "vh?";
+
+  int opt = getopt( argc, argv, opt_str );
+
+  while( opt != -1 ) {
+	switch( opt ) {
+	  
+	case 'v' :
+	  opts.verbose_level ++;
+	  break;
+                 
+	case 'h' :
+	case '?' :
+	  usage();
+	  break;
+                 
+	default : break;
+	}
+         
+	opt = getopt( argc, argv, opt_str );
+  }
+     
+  test::run_tests();
+  test::print_results();
+  return 0;
 }

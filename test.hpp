@@ -21,6 +21,12 @@ namespace test
   using test_info_t = std::tuple< assert_number_t, success_t, test_suite_name_t, test_case_name_t, location_t, expression_t, expression_t >;
 };
 
+struct opts_t
+{
+  int verbose_level = 0;
+};
+
+extern opts_t opts;
 extern std::map< std::string, std::map< std::string, std::vector< std::tuple< bool, std::string, std::string, std::string >>>> report;
 extern std::vector< test::test_info_t > test_results;
 extern std::string current_ts_name, current_tc_name;
@@ -39,26 +45,26 @@ namespace test
   {
     success_t ok = ( exp1 == exp2 );
 
-    std::printf( ok
-                 ? "#%lu [\e[32mOK\e[39m] (%s == %s) At %s:%i\r\n"
-                 : "#%lu [\e[31mFAIL\e[39m] (%s != %s) At %s:%i\r\n"
-                 , asserts_counter
-                 , exp1_str
-                 , exp2_str
-                 , file
-                 , line );
+    if( opts.verbose_level > 1 ) std::printf( ok
+											  ? "#%lu [\e[32mOK\e[39m] (%s == %s) At %s:%i\r\n"
+											  : "#%lu [\e[31mFAIL\e[39m] (%s != %s) At %s:%i\r\n"
+											  , asserts_counter
+											  , exp1_str
+											  , exp2_str
+											  , file
+											  , line );
 
 	if( !ok ){
 
 	  if constexpr (( !std::is_null_pointer_v< A > && !std::is_null_pointer_v< B >))
-					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+					 if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  else if constexpr (( std::is_null_pointer_v< A >)) {
 
-		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  
 	  } else if constexpr (( std::is_null_pointer_v< B >)){
 
-		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl; } else {}
 	  
 	  }	  
 	}
@@ -74,26 +80,26 @@ namespace test
   {
     success_t ok = ( exp1 != exp2 );
 
-    std::printf( ok
-                 ? "#%lu [\e[32mOK\e[39m] (%s != %s) At %s:%i\r\n"
-                 : "#%lu [\e[31mFAIL\e[39m] (%s == %s) At %s:%i\r\n"
-                 , asserts_counter
-                 , exp1_str
-                 , exp2_str
-                 , file
-                 , line );
+    if( opts.verbose_level > 1 ) std::printf( ok
+											  ? "#%lu [\e[32mOK\e[39m] (%s != %s) At %s:%i\r\n"
+											  : "#%lu [\e[31mFAIL\e[39m] (%s == %s) At %s:%i\r\n"
+											  , asserts_counter
+											  , exp1_str
+											  , exp2_str
+											  , file
+											  , line );
 
 	if( !ok ){
 
 	  if constexpr (( !std::is_null_pointer_v< A > && !std::is_null_pointer_v< B >))
-					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+					 if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  else if constexpr (( std::is_null_pointer_v< A >)) {
 
-		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  
 	  } else if constexpr (( std::is_null_pointer_v< B >)){
 
-		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl; } else {}
 	  
 	  }	  
 	}
@@ -109,26 +115,26 @@ namespace test
   {
     success_t ok = ( exp1 == exp2 );
 
-    std::printf( ok
-                 ? "#%lu [\e[32mOK\e[39m] (%s == %s) At %s:%i\r\n"
-                 : "#%lu [\e[31mFAIL\e[39m] (%s != %s) At %s:%i\r\n"
-                 , asserts_counter
-                 , exp1_str
-                 , exp2_str
-                 , file
-                 , line );
+    if( opts.verbose_level > 1 ) std::printf( ok
+											  ? "#%lu [\e[32mOK\e[39m] (%s == %s) At %s:%i\r\n"
+											  : "#%lu [\e[31mFAIL\e[39m] (%s != %s) At %s:%i\r\n"
+											  , asserts_counter
+											  , exp1_str
+											  , exp2_str
+											  , file
+											  , line );
 
 	if( !ok ){
 
 	  if constexpr (( !std::is_null_pointer_v< A > && !std::is_null_pointer_v< B >))
-					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+					 if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  else if constexpr (( std::is_null_pointer_v< A >)) {
 
-		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  
 	  } else if constexpr (( std::is_null_pointer_v< B >)){
 
-		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl; } else {}
 	  
 	  }	  
 	}
@@ -142,26 +148,26 @@ namespace test
   {
     success_t ok = ( exp1 != exp2 );
 
-    std::printf( ok
-                 ? "#%lu [\e[32mOK\e[39m] (%s != %s) At %s:%i\r\n"
-                 : "#%lu [\e[31mFAIL\e[39m] (%s == %s) At %s:%i\r\n"
-                 , asserts_counter
-                 , exp1_str
-                 , exp2_str
-                 , file
-                 , line );
+    if( opts.verbose_level > 1 ) std::printf( ok
+											  ? "#%lu [\e[32mOK\e[39m] (%s != %s) At %s:%i\r\n"
+											  : "#%lu [\e[31mFAIL\e[39m] (%s == %s) At %s:%i\r\n"
+											  , asserts_counter
+											  , exp1_str
+											  , exp2_str
+											  , file
+											  , line );
 	
 	if( !ok ){
 
 	  if constexpr (( !std::is_null_pointer_v< A > && !std::is_null_pointer_v< B >))
-					 std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+					 if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  else if constexpr (( std::is_null_pointer_v< A >)) {
 
-		std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << "nullptr" << "\", \"" << exp2 << "\" )" << std::endl << std::endl; } else {}
 	  
 	  } else if constexpr (( std::is_null_pointer_v< B >)){
 
-		std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl;
+		if( opts.verbose_level > 1 ){ std::cout << "( \"" << exp1 << "\", \"" << "nullptr" << "\" )" << std::endl << std::endl; } else {}
 	  
 	  }	  
 	}
@@ -174,11 +180,11 @@ namespace test
 
 #define ASSERT_EQ( A, B ) try { test::assert_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
-    std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
-                 , asserts_counter                                      \
-                 , __FILE__												\
-                 , __LINE__												\
-                 , e.what() );                                          \
+    if( opts.verbose_level > 1 ) std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
+											  , asserts_counter			\
+											  , __FILE__				\
+											  , __LINE__				\
+											  , e.what() );				\
                                                                         \
     asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
@@ -191,15 +197,15 @@ namespace test
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "ASSERT_EQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
   }																		\
-  std::cout << ""                                                       \
+  if( opts.verbose_level > 1 ) std::cout << ""							\
 
 #define ASSERT_NOT_EQ( A, B ) try { test::assert_not_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
-    std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
-                 , asserts_counter                                      \
-                 , __FILE__												\
-                 , __LINE__												\
-                 , e.what() );                                          \
+    if( opts.verbose_level > 1 ) std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
+											  , asserts_counter			\
+											  , __FILE__				\
+											  , __LINE__				\
+											  , e.what() );				\
                                                                         \
     asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
@@ -212,15 +218,15 @@ namespace test
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "ASSERT_NOT_EQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
   }																		\
-  std::cout << ""                                                       \
+  if( opts.verbose_level > 1 ) std::cout << ""							\
 
 #define EXPECT_EQ( A, B ) try { test::expect_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
-    std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
-                 , asserts_counter                                      \
-                 , __FILE__												\
-                 , __LINE__												\
-                 , e.what() );                                          \
+    if( opts.verbose_level > 1 ) std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
+											  , asserts_counter			\
+											  , __FILE__				\
+											  , __LINE__				\
+											  , e.what() );				\
                                                                         \
     asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
@@ -233,15 +239,15 @@ namespace test
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "EXPECT_EQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
   }																		\
-  std::cout << ""                                                       \
+  if( opts.verbose_level > 1 ) std::cout << ""							\
 
 #define EXPECT_NOT_EQ( A, B ) try { test::expect_not_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
-    std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
-                 , asserts_counter                                      \
-                 , __FILE__												\
-                 , __LINE__												\
-                 , e.what() );                                          \
+    if( opts.verbose_level > 1 ) std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
+											  , asserts_counter			\
+											  , __FILE__				\
+											  , __LINE__				\
+											  , e.what() );				\
                                                                         \
     asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
@@ -254,15 +260,15 @@ namespace test
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "EXPECT_NOT_EQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
   }																		\
-  std::cout << ""                                                       \
+  if( opts.verbose_level > 1 ) std::cout << ""							\
 
 #define ASSERT_STREQ( A, B ) try { test::assert_str_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
-    std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
-                 , asserts_counter                                      \
-                 , __FILE__												\
-                 , __LINE__												\
-                 , e.what() );                                          \
+    if( opts.verbose_level > 1 ) std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
+											  , asserts_counter			\
+											  , __FILE__				\
+											  , __LINE__				\
+											  , e.what() );				\
                                                                         \
     asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
@@ -275,15 +281,15 @@ namespace test
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "ASSERT_STREQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
   }																		\
-  std::cout << ""                                                       \
+  if( opts.verbose_level > 1 ) std::cout << ""							\
 
 #define ASSERT_NOT_STREQ( A, B ) try { test::assert_not_str_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
-    std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
-                 , asserts_counter                                      \
-                 , __FILE__												\
-                 , __LINE__												\
-                 , e.what() );                                          \
+    if( opts.verbose_level > 1 ) std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
+											  , asserts_counter			\
+											  , __FILE__				\
+											  , __LINE__				\
+											  , e.what() );				\
                                                                         \
     asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
@@ -296,15 +302,15 @@ namespace test
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "ASSERT_NOT_STREQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
   }																		\
-  std::cout << ""                                                       \
+  if( opts.verbose_level > 1 ) std::cout << ""							\
 
 #define EXPECT_STREQ( A, B ) try { test::expect_str_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
-    std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
-                 , asserts_counter                                      \
-                 , __FILE__												\
-                 , __LINE__												\
-                 , e.what() );                                          \
+    if( opts.verbose_level > 1 ) std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
+											  , asserts_counter			\
+											  , __FILE__				\
+											  , __LINE__				\
+											  , e.what() );				\
                                                                         \
     asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
@@ -317,15 +323,15 @@ namespace test
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "EXPECT_STREQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
   }																		\
-  std::cout << ""                                                       \
+  if( opts.verbose_level > 1 ) std::cout << ""							\
 
 #define EXPECT_NOT_STREQ( A, B ) try { test::expect_not_str_equal( A, B, __FILE__, __LINE__, #A, #B ); } \
   catch( std::exception & e ){                                          \
-    std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
-                 , asserts_counter                                      \
-                 , __FILE__												\
-                 , __LINE__												\
-                 , e.what() );                                          \
+    if( opts.verbose_level > 1 ) std::printf( "#%lu [\e[31mFAIL\e[39m] At %s:%i due to std exception ( %s ). Terminating ...\r\n" \
+											  , asserts_counter			\
+											  , __FILE__				\
+											  , __LINE__				\
+											  , e.what() );				\
                                                                         \
     asserts_counter ++;													\
     test_results.push_back( std::make_tuple( asserts_counter,           \
@@ -338,7 +344,7 @@ namespace test
     report.at( current_ts_name ).at( current_tc_name ).push_back( std::make_tuple( false, "EXPECT_NOT_STREQ", std::string( #A ), std::string( #B ) )); \
     std::terminate();                                                   \
   }																		\
-  std::cout << ""                                                       \
+  if( opts.verbose_level > 1 ) std::cout << ""							\
 
 #define TEST( TestSuiteName, TestCaseName )								\
   volatile void __attribute__(( used, weak )) test_suite_name_##TestSuiteName##_test_case_name_##TestCaseName##_nested( void ); \
@@ -352,7 +358,7 @@ namespace test
       report.insert( std::make_pair( current_ts_name, std::map< std::string, std::vector< std::tuple< bool, std::string, std::string, std::string >>>() )); \
     if( report.at( current_ts_name ).find( current_tc_name ) == report.at( current_ts_name ).end() ) \
       report.at( current_ts_name ).insert( std::make_pair( current_tc_name, std::vector< std::tuple< bool, std::string, std::string, std::string >>() )); \
-    std::printf( "\r\nRunning %s : %s ... \r\n\r\n", current_ts_name.c_str(), current_tc_name.c_str() ); \
+    if( opts.verbose_level > 1 ) std::printf( "\r\nRunning %s : %s ... \r\n\r\n", current_ts_name.c_str(), current_tc_name.c_str() ); \
     test_suite_name_##TestSuiteName##_test_case_name_##TestCaseName##_nested(); \
   }																		\
                                                                         \
