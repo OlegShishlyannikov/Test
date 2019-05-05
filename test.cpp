@@ -237,7 +237,8 @@ namespace test
 
 void usage( void )
 {
-  std::printf( "Usage : ./<project_name>.elf [opts]\r\n\t -v : Verbosity level (default is 0).\r\n-t [digit] : Number of additional threads (default is 0).\r\n" );
+  std::printf( "Usage : ./<project_name>.elf [opts]\r\n\t -v [-vv] : Verbosity level (default is 0).\r\n\t -t [digit] : Number of additional threads (default is 0).\r\n\r\n Example ./app_test.elf -v -t $(nproc)\r\n" );
+  std::exit( 0 );
 }
 
 int main( int argc, char * argv[] )
