@@ -17,14 +17,6 @@ namespace test
   uint64_t asserts_counter;
   thread_local std::string ts_name = "", tc_name = "";
 
-  static void thread_task( volatile void( **start_addr )( void ), uint64_t num )
-  {
-	for( uint64_t i = 0; i < num; i ++ ){
-	  
-	  ( *( start_addr + i ))();
-	}
-  }
-
   void run_tests()
   {	
 	std::thread * threads = new std::thread[ opts.threads_num ];
@@ -36,14 +28,17 @@ namespace test
 	uint64_t tc_leftover = ( opts.threads_num )
 	  ? ( &__stop_test_function_pointers - &__start_test_function_pointers ) % opts.threads_num
 	  : &__stop_test_function_pointers - &__start_test_function_pointers;
+
+	auto thread_task = []( volatile void( **start_addr )( void ), uint64_t num )
+	  -> void { for( uint64_t i = 0; i < num; i ++ ){( *( start_addr + i ))(); }};
 	
 	for( uint64_t i = 0; i < opts.threads_num; i ++ ){
 
 	  threads[ i ] = std::thread( thread_task, &__start_test_function_pointers + ( i * tc_per_thread_num ), tc_per_thread_num );
 	}
 
-	for( unsigned int i = 0; i < opts.threads_num; i ++ ) threads[ i ].join();
 	std::thread leftover = std::thread( thread_task, last_tcs, tc_leftover );	
+	for( unsigned int i = 0; i < opts.threads_num; i ++ ) threads[ i ].join();
 	leftover.join();
 	delete[] threads;
   }
@@ -237,7 +232,7 @@ namespace test
 
 void usage( void )
 {
-  std::printf( "Usage : ./<project_name>.elf [opts]\r\n\t -v [-vv] : Verbosity level (default is 0).\r\n\t -t [digit] : Number of additional threads (default is 0).\r\n\r\n Example ./app_test.elf -v -t $(nproc)\r\n" );
+  std::printf( "Usage : ./<project_name>.elf [opts]\r\n\t-v [-vv] : Verbosity level (default is 0).\r\n\t-t [digit] : Number of additional threads (default is 0).\r\n\r\n\tExample : ./app_test.elf -v -t $(nproc)\r\n" );
   std::exit( 0 );
 }
 
