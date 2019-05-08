@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 opts_t opts;
+char * progname;
 
 extern volatile void( *__start_test_function_pointers )( void );
 extern volatile void( *__stop_test_function_pointers )( void );
@@ -232,13 +233,14 @@ namespace test
 
 void usage( void )
 {
-  std::printf( "Usage : ./<project_name>.elf [opts]\r\n\t-v [-vv] : Verbosity level (default is 0).\r\n\t-t [digit] : Number of additional threads (default is 0).\r\n\r\n\tExample : ./app_test.elf -v -t $(nproc)\r\n" );
+  std::printf( "Usage : %s [opts]\r\n\t-v [-vv] : Verbosity level (default is 0).\r\n\t-t [digit] : Number of additional threads (default is 0).\r\n\r\n\tExample : %s -v -t $(nproc)\r\n", progname, progname );
   std::exit( 0 );
 }
 
 int main( int argc, char * argv[] )
 {
   static const char * opt_str = "t:vh?";
+  progname = argv[ 0 ];
   int opt = getopt( argc, argv, opt_str );
 
   while( opt != -1 ) {
