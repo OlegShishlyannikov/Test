@@ -46,7 +46,6 @@ namespace test
 
   void assert_str_equal( const char * exp1, const char * exp2, const char * file, int line, const char * exp1_str, const char * exp2_str )
   {
-	extern thread_local std::string ts_name, tc_name;
     success_t ok = ( std::strcmp( exp1, exp2 ) == 0 );
 	std::lock_guard< std::mutex > lock( mtx );
 
@@ -83,7 +82,6 @@ namespace test
 
   void assert_not_str_equal( const char * exp1, const char * exp2, const char * file, int line, const char * exp1_str, const char * exp2_str )
   {
-	extern thread_local std::string ts_name, tc_name;
     success_t ok = ( std::strcmp( exp1, exp2 ) != 0 );
 	std::lock_guard< std::mutex > lock( mtx );
 
@@ -120,7 +118,6 @@ namespace test
 
   void expect_str_equal( const char * exp1, const char * exp2, const char * file, int line, const char * exp1_str, const char * exp2_str )
   {
-	extern thread_local std::string ts_name, tc_name;
     success_t ok = ( std::strcmp( exp1, exp2 ) == 0 );
 	std::lock_guard< std::mutex > lock( mtx );
 
@@ -155,7 +152,6 @@ namespace test
 
   void expect_not_str_equal( const char * exp1, const char * exp2, const char * file, int line, const char * exp1_str, const char * exp2_str )
   {
-	extern thread_local std::string ts_name, tc_name;
     success_t ok = ( std::strcmp( exp1, exp2 ) != 0 );
 	std::lock_guard< std::mutex > lock( mtx );
 	
