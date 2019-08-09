@@ -2,27 +2,29 @@
 Simple testing framework
 
 ## Usage: 
-
+	`BASH
+	<app_build>.elf -t <number_of_threads> -v[verbosity]; # At example: ./app -t 8 -vv
+	`
 ### Existing asserts and expectations:
-
-	```C
-	EXPECT_EQ( exp1, exp2 );
-	EXPECT_NOT_EQ( exp1, exp2 );
-	EXPECT_STREQ( exp1, exp2 );
-	EXPECT_NOT_STREQ( exp1, exp2 );
-	ASSERT_EQ( exp1, exp2 );
-	ASSERT_NOT_EQ( exp1, exp2 );
-	ASSERT_STREQ( exp1, exp2 );
-	ASSERT_NOT_STREQ( exp1, exp2 );
-	```
-
-### Creating tests in same of separate file (this functions must be statically linked to executable):
-
-	```C
-	TEST( "Test suite name", "Test case name" )
+	`CPP
+	EXPECT_EQ(exp1, exp2, YOUR_COMMENT);
+	EXPECT_NOT_EQ(exp1, exp2, YOUR_COMMENT);
+	EXPECT_STREQ(exp1, exp2, YOUR_COMMENT);
+	EXPECT_NOT_STREQ(exp1, exp2, YOUR_COMMENT);
+	ASSERT_EQ(exp1, exp2, YOUR_COMMENT);
+	ASSERT_NOT_EQ(exp1, exp2, YOUR_COMMENT);
+	ASSERT_STREQ(exp1, exp2, YOUR_COMMENT);
+	ASSERT_NOT_STREQ(exp1, exp2, YOUR_COMMENT);
+	`
+### To create test:
+	`CPP
+	TEST(TestSuiteName, TestCaseName" )
 	{
-	ASSERT_EQ( 2 + 2, 4 );
-	EXPECT_STREQ( "Foo", "Foo" );
-	...
+		ASSERT_EQ(2 + 2, 4, "2 + 2 = 4");
+		EXPECT_STREQ("Foo", "Foo", "Equal strings");
 	}
-	```
+	`
+### Or without any testsuite or testcase:
+	`CPP
+	EXPECT_EQ(2*2, 4, "2*2 = 4");
+	`
