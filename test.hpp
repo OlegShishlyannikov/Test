@@ -685,9 +685,9 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
     test::sync_var.notify_one();                                                                                       \
   }                                                                                                                    \
                                                                                                                        \
-  volatile void *__attribute__((used, section("testcases")))                                                           \
+  volatile const void *__attribute__((used, section("testcases")))                                                     \
       test_suite_##TestSuiteName##_##test_case_##TestCaseName##_ptr =                                                  \
-          reinterpret_cast<volatile void *>(test_suite_##TestSuiteName##_##test_case_##TestCaseName);                  \
+          reinterpret_cast<volatile const void *>(test_suite_##TestSuiteName##_##test_case_##TestCaseName);            \
   volatile void __attribute__((used)) test_suite_##TestSuiteName##_test_case_##TestCaseName##_code()
 
 #endif /* TEST_HPP */
