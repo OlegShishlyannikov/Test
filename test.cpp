@@ -281,13 +281,16 @@ void print_results(void) {
       for (const std::tuple<bool, std::string, std::string, std::string> &check_info : testcase_info.second) {
         if (!std::get<1>(check_info).empty()) {
 
-          if (opts.verbose_level > 0)
-            std::printf((std::get<0>(check_info)) ? "\t\t\t[\e[32mOK\e[39m] (%s), ( \e[33m%s\e[39m, "
-                                                    "\e[33m%s\e[39m )\r\n"
-                                                  : "\t\t\t[\e[31mFAIL\e[39m] (%s), ( "
-                                                    "\e[33m%s\e[39m, \e[33m%s\e[39m )\r\n",
+          if (std::get<0>(check_info)) {
+            if (opts.verbose_level > 0)
+              std::printf("\t\t\t[\e[32mOK\e[39m] (%s), ( \e[33m%s\e[39m, \e[33m%s\e[39m )\r\n",
+                          std::get<1>(check_info).c_str(), std::get<2>(check_info).c_str(),
+                          std::get<3>(check_info).c_str());
+          } else {
+            std::printf("\t\t\t[\e[31mFAIL\e[39m] (%s), ( \e[33m%s\e[39m, \e[33m%s\e[39m )\r\n",
                         std::get<1>(check_info).c_str(), std::get<2>(check_info).c_str(),
                         std::get<3>(check_info).c_str());
+          }
 
           (std::get<0>(check_info)) ? tc_pass_count++ : tc_fails_count++;
         }

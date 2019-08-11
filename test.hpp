@@ -287,7 +287,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::assert_equal(A, B, __FILE__, __LINE__, #A, #B, p_ts_name, p_tc_name);                         \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res                                                                                                     \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -354,7 +354,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::assert_not_equal_builtin(A, B, __FILE__, __LINE__, #A, #B);                                   \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -379,7 +379,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::expect_equal(A, B, __FILE__, __LINE__, #A, #B, p_ts_name, p_tc_name);                         \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -401,7 +401,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::expect_equal_builtin(A, B, __FILE__, __LINE__, #A, #B);                                       \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -426,7 +426,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::expect_not_equal(A, B, __FILE__, __LINE__, #A, #B, p_ts_name, p_tc_name);                     \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -448,7 +448,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::expect_not_equal_builtin(A, B, __FILE__, __LINE__, #A, #B);                                   \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -473,7 +473,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::assert_str_equal(A, B, __FILE__, __LINE__, #A, #B, p_ts_name, p_tc_name);                     \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -495,7 +495,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res test::assert_str_equal_builtin(A, B, __FILE__, __LINE__, #A, #B);                                     \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -520,7 +520,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::assert_not_str_equal(A, B, __FILE__, __LINE__, #A, #B, p_ts_name, p_tc_name);                 \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -542,7 +542,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::assert_not_str_equal_builtin(A, B, __FILE__, __LINE__, #A, #B);                               \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -567,7 +567,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::expect_str_equal(A, B, __FILE__, __LINE__, #A, #B, p_ts_name, p_tc_name);                     \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -589,7 +589,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::expect_str_equal_builtin(A, B, __FILE__, __LINE__, #A, #B);                                   \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -614,7 +614,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::expect_not_str_equal(A, B, __FILE__, __LINE__, #A, #B, p_ts_name, p_tc_name);                 \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
@@ -636,7 +636,7 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
       try {                                                                                                            \
         bool res = test::expect_str_not_equal_builtin(A, B, __FILE__, __LINE__, #A, #B);                               \
         if (!res)                                                                                                      \
-          std::printf(COMMENT);                                                                                        \
+          std::printf(COMMENT "\r\n");                                                                                 \
         return res;                                                                                                    \
       } catch (std::exception & e) {                                                                                   \
         using namespace test;                                                                                          \
