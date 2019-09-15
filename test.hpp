@@ -7,6 +7,7 @@
 #include <cstring>
 #include <functional>
 #include <iostream>
+#include <iterator>
 #include <map>
 #include <mutex>
 #include <stdexcept>
@@ -23,7 +24,20 @@ using expression_t = std::string;
 using assert_number_t = uint64_t;
 using test_info_t =
     std::tuple<assert_number_t, success_t, test_suite_name_t, test_case_name_t, location_t, expression_t, expression_t>;
-}; // namespace test
+
+template <typename S, typename T> struct is_streamable {
+private:
+  template <typename SS, typename TT>
+  static auto test(int) -> decltype(std::declval<SS &>() << std::declval<TT>(), std::true_type());
+  template <typename, typename> static auto test(...) -> std::false_type;
+
+public:
+  static const bool value = decltype(test<S, T>(0))::value;
+};
+
+template <typename S, typename T> static constexpr bool is_streamable_v = is_streamable<S, T>::value;
+extern std::string demangle_typestr(const char *name);
+} // namespace test
 
 struct opts_t {
   int verbose_level = 0;
@@ -64,6 +78,29 @@ extern std::mutex mtx;
 extern uint64_t asserts_counter;
 extern thread_local std::string ts_name, tc_name;
 extern bool stub_res;
+
+template <typename T> decltype(auto) print_value(const T &t) {
+  if constexpr (!std::is_null_pointer_v<T>) {
+    if constexpr (is_streamable_v<std::ostream, T>) {
+
+      return t;
+    } else {
+
+      size_t num_bytes = sizeof(T);
+      return "[Object with size of " + std::to_string(num_bytes) + " bytes, (" + demangle_typestr(typeid(T).name()) +
+             ")]";
+    }
+  } else {
+
+    return "nullptr";
+  }
+}
+
+template <typename A, typename B> void print_values(const A &a, const B &b) {
+  if (opts.verbose_level > 1) {
+    std::cout << "( \"" << print_value(a) << "\", \"" << print_value(b) << "\" )" << std::endl << std::endl;
+  }
+}
 
 template <typename A, typename B>
 bool assert_equal_builtin(A exp1, B exp2, const char *file, int line, const char *exp1_str, const char *exp2_str) {
@@ -126,24 +163,8 @@ bool assert_equal(A exp1, B exp2, const char *file, int line, const char *exp1_s
                 asserts_counter, exp1_str, exp2_str, file, line,
                 std::hash<std::thread::id>()(std::this_thread::get_id()));
 
-  if (!ok) {
-    if constexpr ((!std::is_null_pointer_v<A> && !std::is_null_pointer_v<B>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
-    } else if constexpr ((std::is_null_pointer_v<A>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \""
-                  << "nullptr"
-                  << "\", \"" << exp2 << "\" )" << std::endl
-                  << std::endl;
-    } else if constexpr ((std::is_null_pointer_v<B>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \"" << exp1 << "\", \""
-                  << "nullptr"
-                  << "\" )" << std::endl
-                  << std::endl;
-    }
-  }
+  if (!ok)
+    print_values(exp1, exp2);
 
   test_results.push_back(std::make_tuple(asserts_counter, ok, *p_ts_name, *p_tc_name,
                                          std::string(file) + ":" + std::to_string(line), std::string(exp1_str),
@@ -169,24 +190,8 @@ bool assert_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
                 asserts_counter, exp1_str, exp2_str, file, line,
                 std::hash<std::thread::id>()(std::this_thread::get_id()));
 
-  if (!ok) {
-    if constexpr ((!std::is_null_pointer_v<A> && !std::is_null_pointer_v<B>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
-    } else if constexpr ((std::is_null_pointer_v<A>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \""
-                  << "nullptr"
-                  << "\", \"" << exp2 << "\" )" << std::endl
-                  << std::endl;
-    } else if constexpr ((std::is_null_pointer_v<B>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \"" << exp1 << "\", \""
-                  << "nullptr"
-                  << "\" )" << std::endl
-                  << std::endl;
-    }
-  }
+  if (!ok)
+    print_values(exp1, exp2);
 
   test_results.push_back(std::make_tuple(asserts_counter, ok, *p_ts_name, *p_tc_name,
                                          std::string(file) + ":" + std::to_string(line), std::string(exp1_str),
@@ -212,24 +217,8 @@ bool expect_equal(A exp1, B exp2, const char *file, int line, const char *exp1_s
                 asserts_counter, exp1_str, exp2_str, file, line,
                 std::hash<std::thread::id>()(std::this_thread::get_id()));
 
-  if (!ok) {
-    if constexpr ((!std::is_null_pointer_v<A> && !std::is_null_pointer_v<B>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
-    } else if constexpr ((std::is_null_pointer_v<A>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \""
-                  << "nullptr"
-                  << "\", \"" << exp2 << "\" )" << std::endl
-                  << std::endl;
-    } else if constexpr ((std::is_null_pointer_v<B>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \"" << exp1 << "\", \""
-                  << "nullptr"
-                  << "\" )" << std::endl
-                  << std::endl;
-    }
-  }
+  if (!ok)
+    print_values(exp1, exp2);
 
   test_results.push_back(std::make_tuple(asserts_counter, ok, *p_ts_name, *p_tc_name,
                                          std::string(file) + ":" + std::to_string(line), std::string(exp1_str),
@@ -252,24 +241,8 @@ bool expect_not_equal(A exp1, B exp2, const char *file, int line, const char *ex
                 asserts_counter, exp1_str, exp2_str, file, line,
                 std::hash<std::thread::id>()(std::this_thread::get_id()));
 
-  if (!ok) {
-    if constexpr ((!std::is_null_pointer_v<A> && !std::is_null_pointer_v<B>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \"" << exp1 << "\", \"" << exp2 << "\" )" << std::endl << std::endl;
-    } else if constexpr ((std::is_null_pointer_v<A>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \""
-                  << "nullptr"
-                  << "\", \"" << exp2 << "\" )" << std::endl
-                  << std::endl;
-    } else if constexpr ((std::is_null_pointer_v<B>)) {
-      if (opts.verbose_level > 1)
-        std::cout << "( \"" << exp1 << "\", \""
-                  << "nullptr"
-                  << "\" )" << std::endl
-                  << std::endl;
-    }
-  }
+  if (!ok)
+    print_values(exp1, exp2);
 
   test_results.push_back(std::make_tuple(asserts_counter, ok, *p_ts_name, *p_tc_name,
                                          std::string(file) + ":" + std::to_string(line), std::string(exp1_str),

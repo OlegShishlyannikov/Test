@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <unistd.h>
+#include <cxxabi.h>
 
 opts_t opts;
 char *progname;
@@ -18,6 +19,12 @@ std::map<std::string, std::map<std::string, std::vector<std::tuple<bool, std::st
 uint64_t asserts_counter;
 bool stub_res;
 thread_local std::string ts_name = "", tc_name = "";
+
+std::string demangle_typestr(const char *name) {
+  int status = -4;
+  std::unique_ptr<char, void (*)(void *)> res{abi::__cxa_demangle(name, NULL, NULL, &status), std::free};
+  return (status == 0) ? res.get() : name;
+}
 
 void run_tests() {
   std::thread *threads = new std::thread[opts.threads_num];
